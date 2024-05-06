@@ -27,7 +27,6 @@ class Solution {
         ListNode prev = null;
 
         while (temp != null) {
-            // System.out.println(arr.get(idx));
             if (arr.get(idx) == 0) {
                 if (prev == null) {
                     head = temp.next;
