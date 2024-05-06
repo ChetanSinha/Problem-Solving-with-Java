@@ -10,36 +10,22 @@
  */
 class Solution {
     public ListNode removeNodes(ListNode head) {
-        List<Integer> arr = new ArrayList<>();
+        Stack<Integer> stk = new Stack<>();
         for (ListNode temp = head; temp != null; temp = temp.next) {
-            arr.add(temp.val);
-        }
-
-        int mx = -1;
-        for (int i=arr.size()-1; i>=0; i--) {
-            int val = (mx > arr.get(i)) ? 0 : 1;
-            mx = Math.max(mx, arr.get(i));
-            arr.set(i, val);
-        }
-
-        int idx = 0;
-        ListNode temp = head;
-        ListNode prev = null;
-
-        while (temp != null) {
-            if (arr.get(idx) == 0) {
-                if (prev == null) {
-                    head = temp.next;
-                } else {
-                    prev.next = temp.next;
-                }
-            } else {
-                prev = temp;
+            while (!stk.isEmpty() && stk.peek() < temp.val) {
+                stk.pop();
             }
-            temp = temp.next;
-            idx += 1;
+            stk.add(temp.val);
         }
 
-        return head;
+        ListNode newHead = null;
+        while (!stk.isEmpty()) {
+            ListNode temp = new ListNode();
+            temp.val = stk.pop();
+            temp.next = newHead;
+            newHead = temp;
+        }
+
+        return newHead;
     }
 }
