@@ -9,40 +9,23 @@
  * }
  */
 class Solution {
-    public ListNode reverse(ListNode head) {
-        ListNode cur = head;
-        ListNode prev = null;
-
-        while (cur != null) {
-            ListNode next = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = next;
-        }
-        return prev;
-    }
     public ListNode doubleIt(ListNode head) {
-        ListNode newHead = reverse(head);
-        ListNode temp = newHead;
-        int carry = 0;
+        ListNode temp = head;
+        if (head.val >= 5) {
+            ListNode node = new ListNode(1, head);
+            head = node;
+        }
+
         int val;
         while (temp.next != null) {
-            val = (temp.val * 2 + carry);
-            carry = val / 10;
+            val = temp.val * 2;
+            if (temp.next.val >= 5) {
+                val += 1;
+            }
             temp.val = val % 10;
             temp = temp.next;
         }
-        val = (temp.val * 2 + carry);
-        carry = val / 10;
-        temp.val = val % 10;
-        
-        if (carry != 0) {
-            ListNode newNode = new ListNode();
-            newNode.val = carry;
-            newNode.next = null;
-            temp.next = newNode;
-        }
-
-        return reverse(newHead);
+        temp.val = (temp.val * 2) % 10;
+        return head;
     }
 }
