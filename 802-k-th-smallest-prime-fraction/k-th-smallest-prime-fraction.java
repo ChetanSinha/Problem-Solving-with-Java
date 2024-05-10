@@ -5,7 +5,8 @@ class Solution {
         int j;
     }
     public int[] kthSmallestPrimeFraction(int[] arr, int k) {
-        PriorityQueue<Triplets> pq = new PriorityQueue<>((a, b) -> Double.compare(a.fraction, b.fraction));
+        PriorityQueue<Triplets> pq = new PriorityQueue<>((a, b) -> Double.compare(b.fraction, a.fraction));
+
         for (int i=0; i<arr.length; i++) {
             for (int j=i+1; j<arr.length; j++) {
                 Triplets t = new Triplets();
@@ -13,17 +14,13 @@ class Solution {
                 t.i = arr[i];
                 t.j = arr[j];
                 pq.add(t);
+                if (pq.size() > k) {
+                    pq.poll();
+                }
             }
         }
 
-        while (k != 1) {
-            Triplets t = pq.poll();
-            // System.out.println(t.i + " " + t.j);
-            k -= 1;
-        }
-
         Triplets t = pq.poll();
-        // System.out.println(t.fraction);
         return new int[]{t.i, t.j};
     }
 }
