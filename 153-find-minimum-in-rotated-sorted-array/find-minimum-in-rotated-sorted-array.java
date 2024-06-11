@@ -6,13 +6,12 @@ class Solution {
 
         while (low <= high) {
             int mid = low + (high - low)/2;
-            ans = Math.min(ans, nums[mid]);
 
             if (nums[mid] >= nums[low]) {
                 ans = Math.min(ans, nums[low]);
                 low = mid + 1;
             } else {
-                ans = Math.min(ans, nums[high]);
+                ans = Math.min(ans, nums[mid]);
                 high = mid - 1;
             }
         } 
